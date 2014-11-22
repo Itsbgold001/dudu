@@ -1,8 +1,8 @@
 <?php
 	####### db config ##########
-	$db_username = 'root';
-	$db_password = '';
-	$db_name = 'dudu';
+	$db_username = 'db_user';
+	$db_password = 'db_password';
+	$db_name = 'db_name';
 	$db_host = 'localhost';
 	####### db config end ##########
 
