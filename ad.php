@@ -1,0 +1,4 @@
+<!-- advertisement.php -->
+<?php
+
+?>

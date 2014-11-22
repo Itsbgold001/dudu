@@ -1,0 +1,71 @@
+/* General Demo Style */
+
+
+/* Reset */
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+
+.container > header {
+	padding: 2.875em 1.875em 1.875em;
+}
+
+
+.container > header nav {
+	float: right;
+}
+
+
+
+
+.main > section {
+	max-width: 260px;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.main > section h2 {
+	font-weight: 300;
+	color: #ccc;
+}
+
+.main > section button {
+	border: none;
+	background: #ff6633;
+	color: #fff;
+	padding: 1.5em;
+	display: block;
+	width: 100%;
+	cursor: pointer;
+	margin: 10px 0;
+	font-size: 0.8em;
+}
+
+.main > section button:hover {
+	background: #F00;
+}
+
+.main > section button.active {
+	background: #ff6633;
+}
+
+.main > section button.disabled {
+	background: #aaa;
+	pointer-events: none;
+}

@@ -1,0 +1,5 @@
+In this folder are uploaded the audio files for "nature" category.
+If the script is used on Unix systems, the folder must have CHMOD 0777 (or 0755).
+
+With respect,
+MarPlo ( http://coursesweb.net )

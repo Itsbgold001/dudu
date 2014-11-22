@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Upload Script for Gallery of Images and Audio files</title>
+<style type="text/css"><!--
+body {margin:0 3px;}
+pre {font-size:16px; font-weight:bold; color:blue;}
+.sb { font-weight:bold; }
+.sbu { font-weight:bold; text-decoration:underline; }
+.sbi { font-weight:bold; font-style:italic; }
+pre .sbi { color:#0102b8; }
+pre.prhtml { font-size:14px; color:#01be08; }
+h3, h4 {text-decoration:underline;}
+#ins { margin:1px 0 1px 23px; background:#fefeda; padding:2px 1px 2px 5px; }
+#usg { background:#ededfe; padding:3px; }
+#imp { border:1px solid red; padding:3px; }
+--></style>
+</head>
+<body>
+<center><h1>Upload Script for Gallery of Images and Audio files</h1>
+( <i>From <a href="http://coursesweb.net/php-mysql/" title="Free courses for web master">coursesweb.net</a></i> )</center>
+<p>This is a <b>script to Upload images and audio files</b> to create a Gallery of Images and Audio files (MP3), grouped by categories.<br/>
+It is created with PHP, MySQL (using OOP technology, and PDO), and JavaScript.<br/>
+Data of the uploaded files (file name, title, description, category, and registration date) are stored in MySQL database.<br/>
+The extension of the file allowed for upload is checked on client side (with JavaScript), and also on the server. The PHP script checks also the size of the files, width and height for images, before upload.<br/>
+This Upload script uses the Ajax technology, the files are uploaded without opening or reloading the page, so a refresh will not resend any form data to the server.<br/>
+You can add multiple uploading fields in the form to upload multiple files in the same time.<br/>
+When images are uploaded, the script automatically creates thumbails for these images, in the same folder, in files with the word "<b>_thumb</b>" added to the image name. The image gallery displays the thumbails; then when click on a thumbail, a new window opens with the image.<br/>
+The PHP code creates automatically the meniu with categories for images and audio gallery, and the list with uploaded files in the accessed category.<br/><br/>
+<span class="sbi">Before you use this script, you should have a minimum knowledge about HTML and PHP</span>.</p>
+
+<h3>Installation</h3>
+<ol id="ins" start="1">
+<li>Open the file "<b>upgalery.php</b>" (in the "upgalery/" directory) and edit the following data.
+ <ul><li>For accessing the MySQL database:
+<pre>
+<span class="sb">$mysql['host'] = 'localhost';</span>              - replace <span class="sbi">localhost</span> with your MySQL server address.
+<span class="sb">$mysql['user'] = 'root';</span>                   - replace <span class="sbi">root</span> with your database user name.
+<span class="sb">$mysql['pass'] = 'passdb';</span>                 - replace <span class="sbi">passdb</span> with your password for MySQL database.
+<span class="sb">$mysql['bdname'] = 'dbname';</span>               - replace <span class="sbi">dbname</span> with the name of your MySQL database.
+</pre></li></ul></li>
+<li>To edit the permissions for the images and audio files that will be uploded, change these settings (in "upgalery.php"):
+<pre>
+$upfrule = array(
+  'imgext' => array('gif', 'jpg', 'jpe', 'png'),        // allowed extensions for images
+  'width' => 900,               // maximum allowed width, in pixels
+  'height' => 700,              // maximum allowed height, in pixels
+  'wthmb'=> 100,                // width for thumbail image
+  'hthmb'=> 100,                // height for thumbail image
+  'imgsize' => 500,             // maximum allowed size for the image file, in KiloBytes (0.5 MB)
+  'audioext' => array('mp3'),       // allowed extensions for audio files
+  'audiosize' =>5000,               // maximum allowed size for the image file, in KiloBytes (5 MB)
+);
+</pre></li>
+<li>Copy the directories: "<b>gaudio</b>", "<b>gimgs</b>", and "<b>upgalery</b>" (with all their content) on your server, <u>in the same directory in which you have the PHP file in which the script will be included</u>.</li>
+<li>If you want to use the categories "nature", and "classic" created for test, give read-write-execute permissions ( CHMOD 0777, or 0755) to the directories "<span class="sb">nature</span>" (in "gimgs/"), and <span class="sb">classic</span> (in "gaudio/").<br/>
+ - If you don't know how to set CHMOD permissions, copy the directories on your server, right-click on folder name, choose "<span class="sb">Properties</span>", and check/select all permissions.</li>
+<li>The last step, create the tables in MySQL database. To create the tables, open in your browser the file "<span class="sb">upgalery/create_tables.php</span>" (In your browser you must access an address like:<br/> "<i>http://localhost/upgalery/create_tables.php</i>"), "localhost" is the domain name.</li>
+</ol>
+
+<h3>Usage</h3>
+<div id="usg">
+ &bull; Once you have installed the script, include it in the PHP file in which you want to use it, by adding this PHP code in that file:
+<pre>include('upgalery/upgalery.php');</pre>
+ - The following instruction returns the menu list with categories for image gallery:
+<pre>$gObj-&gt;getMenu('gimgs')</pre>
+ - The following instruction returns the menu list with categories for audio gallery:
+<pre>$gObj-&gt;getMenu('gaudio')</pre>
+ - To display the gallery for a specified category, calls the <b>gObj-&gt;getGallery()</b> method.<br/>
+ Example:
+<pre>echo gObj-&gt;getGallery($gal, $categ);</pre>
+ - <span class="sbi">$gal</span> can be "gimgs" for images, or "gaudio" for audio gallery.<br/>
+ - <span class="sbi">$categ</span> represents the category name.<br/>
+<i>If these arguments are not specified, the script try to get them from <b>$_GET['gl']</b> (for $gal), and <b>$_GET['gc']</b> (for $categ)</i>.<br/><br/>
+ &bull; In the place you want to include the form for upload, add this code:
+<pre>include('upgalery/form_upload.php');</pre>
+<span class="sb">See how these instructions are used in "test.php" file.</span><br/><br/>
+ &bull; The script has only a category created for image and audio gallery (the folders "<b>nature/</b>", and "<b>classic/</b>"). You can change their name.<br/>
+ &bull; To create a new category, <span class="sbu">just create a new directory</span> in "gimgs/" (for images), and "gaudio/" (for audio), and set it CHMOD permissions so the PHP to can save the files in it.<br/>
+ <span class="sbi">The name of the folder will be the name for the category</span>.<br/><br/>
+ &bull; The script automatically creates Menu list with categories, to modify the HTML code for Menu list, edit the following code in the <b>class.UploadGalery.php</b> file (line 279):
+<pre>$menu .= '&lt;li&gt;&lt;a href=&quot;'.$this-&gt;file.'?gl='.$this-&gt;lsite[$dir].'&amp;amp;gc='.$categs[$i].'&quot; title=&quot;'.$categs[$i].'&quot;&gt;'.ucfirst($categs[$i]).'&lt;/a&gt;&lt;/li&gt;';</pre>
+ &bull; The HTML code for the Image Gallery returned by the script it is composed of these elements:
+<pre class="prhtml">
+&lt;div class=&quot;gimgs&quot;&gt;
+ &lt;b&gt;Title&lt;/b&gt;&lt;br/&gt;
+ &lt;a href=&quot;image_url&quot; title=&quot;Title&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;image_thumbail&quot; alt=&quot;Title&quot; /&gt;&lt;/a&gt;&lt;br/&gt;
+ Description
+&lt;/div&gt;
+</pre>
+ To modify this HTML, edit the following code in the <b>class.UploadGalery.php</b> file (line 100):
+<pre>$galery .= '&lt;div class=&quot;gimgs&quot;&gt;&lt;b&gt;'.$rows[$i]['title'].'&lt;/b&gt;&lt;br/&gt;&lt;a href=&quot;'.$url.'&quot; title=&quot;'.$rows[$i]['title'].'&quot; target=&quot;_blank&quot;&gt;
+&lt;img src=&quot;'.$thumb.'&quot; alt=&quot;'.$rows[$i]['title'].'&quot; /&gt;&lt;/a&gt;&lt;br/&gt;'.$rows[$i]['descript'].'&lt;/div&gt;';</pre>
+ &bull; The HTML code for the Audio Gallery returned by the script it is composed of these elements:
+<pre class="prhtml">
+&lt;a href=&quot;audiofile_url&quot; title=&quot;Title&quot; target=&quot;_blank&quot;&gt;Title&lt;/a&gt; (&lt;i&gt;registration_date&lt;/i&gt;)
+&lt;blockquote&gt;Description&lt;/blockquote&gt;
+</pre>
+ &bull; To modify this HTML code for the Audio Gallery, edit the following code in the <b>class.UploadGalery.php</b> file (line 103):
+<pre>$galery .= '&lt;a href=&quot;'.$url.'&quot; title=&quot;'.$rows[$i]['title'].'&quot; target=&quot;_blank&quot;&gt;'.$rows[$i]['title'].'&lt;/a&gt; (&lt;i&gt;'.date('j-M-Y, H:i', $rows[$i]['dtreg']).'&lt;/i&gt;)
+&lt;blockquote&gt;'.$rows[$i]['descript'].'&lt;/blockquote&gt;';</pre><br/>
+The script is set to create the thumbails with the Height added to <b>$upfrule['hthmb']</b> (in "upgalery.php"), and Width proportioned to this height.<br/>
+ - To create the thumbail with the specified width, and height proportioned to it, replace in "class.UploadGalery.php" the instruction from the line 209 with this code:
+<pre>if($this-&gt;gal == $this-&gt;gimgs) $this-&gt;makeThumb($dirup.'/'.$fname, $ext, $upfrule['wthmb'], 0);</pre>
+ - To create the thumbail with width and height fixed (defined to 'wthmb', and 'hthmb'), replace in "class.UploadGalery.php" the same instruction (from the line 209) with this code:
+<pre>if($this-&gt;gal == $this-&gt;gimgs) $this-&gt;makeThumb($dirup.'/'.$fname, $ext, $upfrule['wthmb'], $upfrule['hthmb']);</pre><br/>
+ &bull; To use the script in other languages, just translate the text in the file "<span class="sbi">texts.php</span>" (in "upgalery/" folder).
+</div>
+
+<h3>Important</h3>
+<div id="imp">
+ - The name of the folder created in "gimgs/", and "gaudio/" will represent also the name of the category. It must have CHMOD permissions so the PHP to can write data in it.<br/>
+ - If you change the category (folder) name after you have uploaded files in it, the script will not work properly because the category (folder) name associated with the files is also stored in MySQL table.<br/>
+ - If the file you upload already exists in the folder, the existing file will be replaced with the new file.<br/>
+ - The name of the directory for galleries, and the name of the MySQL tables that store their data must be the same; <b>gimgs</b> (for images), and <b>gaudio</b> for audio files.<br/>
+ - If the file you upload (its name) already exists in MySQL table, to the same category, the script inserts the file data in a new row, then deletes the old row with that file name.<br/>
+ - The maximum size for upload files depends also by the PHP settings.
+</div>
+<h3>MySQL tables structure</h3>
+This script uses two MySQL tables, <b>gimgs</b> (for images), and <b>gaudio</b> (for audio gallery), with the same column structure:
+<ul>
+ <li><span class="sb">id</span> - numeric index of the rows.</li>
+ <li><span class="sb">file</span> - name of the file.</li>
+ <li><span class="sb">title</span> - the Title for the file in gallery.</li>
+ <li><span class="sb">descript</span> - the Description for the file in gallery.</li>
+ <li><span class="sb">category</span> - category name</li>
+ <li><span class="sb">dtreg</span> - timestamp of the date-time when the file is uploaded.</li>
+</ul>
+<h3>Directory and Files structure</h3>
+ &bull; <span class="sb">gaudio</span> - in this directory are created the categories (folders) in which the audio files are uploaded.<br/>
+ &bull; <span class="sb">gimgs</span> - in this directory are created the categories (folders) in which the images files are uploaded.<br/>
+ &bull; <span class="sb">upgalery</span> - contains the files with PHP and JavaScript code, and the form for upload.
+<ul>
+ <li><span class="sb">class.UploadGalery.php</span> - the PHP class with instructions and methods of the script.</li>
+ <li><span class="sb">create_tables.php</span> - php code to create tables in database.</li>
+ <li><span class="sb">form_upload.php</span> - the form for upload.</li>
+ <li><span class="sb">texts.php</span> - contains the texts used in the script. Just translate the texts in this file if you want to use it in other language.</li>
+ <li><span class="sb">upgalery.php</span> - conteins data that must be set by Admin, to access MySQL database, and permissions for uploaded files. In this file is created the instance to UploadGalery class.</li>
+ <li><span class="sb">upload.js</span> - the JavaScript code for upload form.</li></ul>
+
+ &bull; This script is Free (<span class="sbi">does not provide support or personal modifications</span>).<br/><br/>
+It was successfully tested with Mozilla Firefox, Internet Explorer, Google Chrome and Opera, for a general configuration on localhost with XAMPP. If on other systems does not work properly, depends on their configuration. Problems can appear especially on hostings which not support PDO; or if you modify something in the script code, without knowing PHP and JavaScript.<br/><br/>
+
+With respect,<br/>
+MarPlo<br/>
+</body>
+</html>

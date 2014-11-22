@@ -1,0 +1,5 @@
+In this directory are created folders that represent categories for audio gallery.
+If the script is used on Unix systems, each folder must have CHMOD 0777 (or 0755).
+
+With respect,
+MarPlo ( http://coursesweb.net )
