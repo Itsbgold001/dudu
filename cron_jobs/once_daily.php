@@ -16,4 +16,4 @@ if($numrows > 0){
 	  mysqli_query($db_conx, "DELETE FROM useroptions WHERE username='$username' LIMIT 1");
     }
 }
-?>
+?> 
