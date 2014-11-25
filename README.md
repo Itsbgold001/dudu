@@ -18,7 +18,9 @@ A couple of tips before setting up your project on your localhost server. There 
 
 ** SETTING UP PROJECT **
 Setting up the project on your localhost server is farely easy.
-You'll simply change the connection script configs to match your localhost settings and you're ready to go
+You'll simply change the connection script configs to match your localhost settings, don't forget to import the dudu.sql file dudu/dudu.sql 
+
+Happy Coding
 
 The files:
 dudu/php_includes/db_conx.php
