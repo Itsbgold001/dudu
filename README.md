@@ -28,12 +28,9 @@ dudu/Connections/mysqli_connect.php
 dudu/includes/db.php
 dudu/vote_process.php
 
-<<<<<<< HEAD
 Also I would suggest clearing the tables once imported just so you can start with a clean database.
 
-Any problem setting up project hit me up at malcolmmaima@gmail.com and help you out.
-=======
-Any problem setting up project hit me up at malcolmmaima [at] gmail [dot] com and help you out.
->>>>>>> origin/master
+Any problem setting up project hit me up at http://malcolmmaima.com/contact-me/ and help you out.
+
 Have fun mess with the code as you wish
 
