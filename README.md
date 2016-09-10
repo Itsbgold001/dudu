@@ -2,7 +2,6 @@ dudu
 ====
 
 Fun php/Mysql Social media project
-Prototype: www.duducode.com
 
 @malcolmmaima: I love Game and Web Development
 
